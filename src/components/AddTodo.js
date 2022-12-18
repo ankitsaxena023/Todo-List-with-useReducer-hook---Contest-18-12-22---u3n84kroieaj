@@ -1,55 +1,36 @@
-import React, {  useState } from "react";
+import React,{useState} from "react";
 
 const AddTodo = ({ dispatch }) => {
 
-  const [todo, setTodo] = useState("");
-  return (
-    <>
-      <form
-        id="todo-form"
-        onSubmit={(e) => {
-          e.preventDefault();
-          dispatch({ type: "add_todo", payload: { title: todo } });import React, {  useState } from "react";
-          setTodo("");
+    const [taskArr,setTaskArr] =useState([]);
+    const [inputVal,setVal] = useState("");
+    const [DateId,setId] = useState( new Date().getTime().toString());
 
-        }}
-const AddTodo = ({ dispatch }) => {
+    function submitHandler (e) {
+        e.preventDefault();  
+        setId( new Date().getTime().toString()) ;
+        setTaskArr(
+            [...taskArr,
+                {id:DateId,title:inputVal}
+            ]
+        )
+        dispatch({type:"ADD",payload:{title:inputVal,id:DateId}});
+        setVal("");
+    }
 
-      >
-  const [todo, setTodo] = useState("");
-        <input
-  return (
-          id="todo-input"
-    <>
-          type="text"
-      <form
-          value={todo}
-        id="todo-form"
-          onChange={(e) => setTodo(e.target.value)}
-        onSubmit={(e) => {
-        />
-          e.preventDefault();
-        <button type="submit">Add</button>
-          dispatch({ type: "add_todo", payload: { title: todo } });
-      </form>
-          setTodo("");
-    </>
-        }}
-  );
-      >
-};
-        <input
 
-          id="todo-input"
-export { AddTodo };
-          type="text"
-          value={todo}
-          onChange={(e) => setTodo(e.target.value)}
-        />
-        <button type="submit">Add</button>
-      </form>
-    </>
-  );
-};
+    function inputFun(e) {
+        setVal(e.target.value);
+    }
 
-export { AddTodo };
+    return (
+        <>
+        <form id="todo-form" onSubmit={submitHandler}>
+            <input id="todo-input" type="textarea" required onChange={inputFun} value={inputVal}/>
+            <button type="submit">submit</button>
+        </form>
+        </>
+    )
+}
+
+export { AddTodo }
